@@ -180,7 +180,7 @@ resource "aws_cognito_user_pool_client" "clients" {
 
   explicit_auth_flows = each.value.explicit_auth_flows
 
-  prevent_user_existence_errors = each.value.prevent_user_existence_errors
+  prevent_user_existence_errors = each.value.prevent_user_existence_errors ? "ENABLED" : "LEGACY"
 
   callback_urls = each.value.callback_urls
   logout_urls   = each.value.logout_urls
