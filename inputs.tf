@@ -102,10 +102,10 @@ variable "account_recovery_mechanisms" {
     }
   ]
   validation {
-    condition = contains([{
+    condition = contains(var.account_recovery_mechanisms, {
       name     = "verified_email"
       priority = 1
-    }], var.account_recovery_mechanisms)
+    })
     error_message = "Must allow email account recovery at minimum"
   }
 }
@@ -117,7 +117,7 @@ variable "auto_verified_attributes" {
   type        = list(string)
   default     = ["email"]
   validation {
-    condition     = contains(["email"], var.auto_verified_attributes)
+    condition     = contains(var.auto_verified_attributes, "email")
     error_message = "Must auto verify email at minimum"
   }
 }
