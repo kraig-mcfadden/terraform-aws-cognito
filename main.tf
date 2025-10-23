@@ -54,14 +54,17 @@ resource "aws_cognito_user_pool" "pool" {
     }
   }
 
+  # TODO: this is only usable if email sending config is not COGNITO_DEFAULT! Once we allow
+  # customized emails then we can uncomment this and add a check to make sure the sending
+  # account isn't COGNITO_DEFAULT.
   # TF docs say there needs to be at least 2 account recovery mechanisms to use this
-  dynamic "email_mfa_configuration" {
-    for_each = var.enable_email_mfa && length(var.account_recovery_mechanisms) >= 2 ? [1] : []
-    content {
-      message = var.email_mfa_message
-      subject = var.email_mfa_subject
-    }
-  }
+  # dynamic "email_mfa_configuration" {
+  #   for_each = var.enable_email_mfa && length(var.account_recovery_mechanisms) >= 2 ? [1] : []
+  #   content {
+  #     message = var.email_mfa_message
+  #     subject = var.email_mfa_subject
+  #   }
+  # }
 
   schema {
     name                = "email"

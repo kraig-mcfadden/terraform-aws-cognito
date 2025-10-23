@@ -65,23 +65,23 @@ variable "enable_sms_mfa" {
   default     = true
 }
 
-variable "enable_email_mfa" {
-  description = "Whether to enable email MFA"
-  type        = bool
-  default     = true
-}
+# variable "enable_email_mfa" {
+#   description = "Whether to enable email MFA"
+#   type        = bool
+#   default     = true
+# }
 
-variable "email_mfa_message" {
-  description = "Message template for email MFA"
-  type        = string
-  default     = "Your authentication code is {####}"
-}
+# variable "email_mfa_message" {
+#   description = "Message template for email MFA"
+#   type        = string
+#   default     = "Your authentication code is {####}"
+# }
 
-variable "email_mfa_subject" {
-  description = "Subject for email MFA messages"
-  type        = string
-  default     = "Your authentication code"
-}
+# variable "email_mfa_subject" {
+#   description = "Subject for email MFA messages"
+#   type        = string
+#   default     = "Your authentication code"
+# }
 
 // ------------ Account recovery ------------
 

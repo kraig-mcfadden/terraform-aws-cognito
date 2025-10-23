@@ -69,28 +69,3 @@ output "sms_role_name" {
   description = "Name of the IAM role created for SMS MFA (if created)"
   value       = var.enable_sms_mfa ? aws_iam_role.cognito_sms_role[0].name : null
 }
-
-# Configuration information for apps
-output "configuration_summary" {
-  description = "Summary of configuration for application integration"
-  value = {
-    user_pool_id             = aws_cognito_user_pool.pool.id
-    region                   = data.aws_region.current.region
-    mfa_configuration        = var.mfa_configuration
-    auto_verified_attributes = var.auto_verified_attributes
-    username_attributes      = ["email"]
-    password_policy = {
-      minimum_length    = var.password_minimum_length
-      require_uppercase = var.password_require_uppercase
-      require_lowercase = var.password_require_lowercase
-      require_numbers   = var.password_require_numbers
-      require_symbols   = var.password_require_symbols
-    }
-    mfa_types_enabled = {
-      software_token = var.enable_software_token_mfa
-      sms            = var.enable_sms_mfa
-      email          = var.enable_email_mfa
-    }
-    recovery_mechanisms = var.account_recovery_mechanisms
-  }
-}
