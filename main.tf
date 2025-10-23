@@ -185,13 +185,16 @@ resource "aws_cognito_user_pool_client" "clients" {
 
   prevent_user_existence_errors = each.value.prevent_user_existence_errors ? "ENABLED" : "LEGACY"
 
-  callback_urls = each.value.callback_urls
-  logout_urls   = each.value.logout_urls
-
+  allowed_oauth_flows_user_pool_client = (
+    length(each.value.allowed_oauth_flows) > 0
+    || length(each.value.allowed_oauth_scopes) > 0
+    || length(each.value.callback_urls) > 0
+    || length(each.value.logout_urls) > 0
+  )
   allowed_oauth_scopes = each.value.allowed_oauth_scopes
-
-  allowed_oauth_flows                  = each.value.allowed_oauth_flows
-  allowed_oauth_flows_user_pool_client = length(each.value.allowed_oauth_flows) > 0
+  allowed_oauth_flows  = each.value.allowed_oauth_flows
+  callback_urls        = each.value.callback_urls
+  logout_urls          = each.value.logout_urls
 
   enable_propagate_additional_user_context_data = each.value.enable_propagate_additional_user_context_data
   enable_token_revocation                       = each.value.enable_token_revocation

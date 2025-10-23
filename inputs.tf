@@ -177,7 +177,7 @@ variable "clients" {
       "email",
       "profile"
     ])
-    allowed_oauth_flows                           = optional(list(string), [])
+    allowed_oauth_flows                           = optional(list(string), ["code"])
     enable_propagate_additional_user_context_data = optional(bool, false)
     enable_token_revocation                       = optional(bool, true)
     read_attributes = optional(list(string), [
