@@ -106,7 +106,7 @@ variable "account_recovery_mechanisms" {
       name     = "verified_email"
       priority = 1
     })
-    error_message = "Must allow email account recovery at minimum"
+    error_message = "Must allow email account recovery at minimum."
   }
 }
 
@@ -118,7 +118,7 @@ variable "auto_verified_attributes" {
   default     = ["email"]
   validation {
     condition     = contains(var.auto_verified_attributes, "email")
-    error_message = "Must auto verify email at minimum"
+    error_message = "Must auto verify email at minimum."
   }
 }
 
@@ -170,7 +170,7 @@ variable "clients" {
       "ALLOW_USER_SRP_AUTH"
     ])
     prevent_user_existence_errors = optional(bool, true)
-    callback_urls                 = optional(list(string), [])
+    callback_urls                 = optional(list(string), ["http://localhost"])
     logout_urls                   = optional(list(string), [])
     allowed_oauth_scopes = optional(list(string), [
       "openid",
@@ -192,6 +192,13 @@ variable "clients" {
     ])
   }))
   default = []
+
+  validation {
+    condition = alltrue([
+      for client in var.clients : (contains(client.allowed_oauth_flows, "code") || contains(client.allowed_oauth_flows, "implicit")) ? length(client.callback_urls) > 0 : true
+    ])
+    error_message = "Must be at least one callback_url set if allowed_oauth_flows includes `code` or `implicit`."
+  }
 }
 
 // ------------ Tags ------------
